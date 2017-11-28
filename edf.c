@@ -1,4 +1,5 @@
 #include<stdio.h>                      // A execution time 10, period: 20
+#include<stdlib.h>
 									   // B execution time 25, period: 50
 int main()
 {
@@ -9,8 +10,9 @@ int main()
  											i, j, a, b, to record status of each process*/
  int numa=0,numb=0;                         //accumulated execution time
  int T;
+ int deadlineA, deadlineB;
  printf("\t\t\t------------------------------------------------\n");
- printf("\t\t\Earliest Deadline First algorithm\n");
+ printf("\t\tEarliest Deadline First algorithm\n");
  printf("\t\t\t------------------------------------------------\n");
  printf("please input period and execution for A process\n");
  scanf("%d%d",&cycA,&serveA);
@@ -63,6 +65,8 @@ int main()
   /* this block start running the process*/
   if(T%cycA==0 && T%cycB==0)
   {
+   deadlineA = serveA;
+   deadlineB = serveB;
    A=B=T;
    j=++a;
    i=++b;
@@ -87,12 +91,14 @@ int main()
   /* this block initializes A another new period*/ 
   if(T%cycA==0&&T%cycB!=0)
   {
+
    A=T;
    printf("when T=%d, ",T);
    printf("process A%d is generated\n",++a);   //impossible to compete with A
    numa=0;
+   deadlineA += serveA;
    if(numb<serveB)                //process B is unfinished yet
-    if(cycB>cycA)         
+   if(deadlineB>deadlineA)
     {
      printf("run process A%d\n",a);
         ka=1;
@@ -115,8 +121,9 @@ int main()
    printf("when T=%d, ",T);
    printf("process B%d is generated\n",++b);            //impossible to compete with B
    numb=0;
+   deadlineB += serveB;
    if(numa<serveA)                         //process A is undone yet
-    if(cycB>=cycA)               
+    if(deadlineB>=deadlineA)
      printf("process A%d is on run\n",a);
     else
     {
