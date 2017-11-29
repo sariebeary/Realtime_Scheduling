@@ -24,12 +24,16 @@ void *thread1handler()
 {
     //function 1 for thread 1.
     printf("Thread 1 in\n");
-    printf("Thread 1 starts\n");
+    printf("Locking thread 1\n");
     pthread_mutex_lock(&mutex);
     //do some work here
+    int i = 0;
+    for(i = 0; i < 100; i++) {
+        printf("1\n");
+    }
+    printf("Releasing thread 1\n");
     pthread_mutex_unlock(&mutex);
     
-    printf("Thread 1 ends\n");
     printf("Thread 1 out\n");
     
     pthread_exit(NULL);
@@ -38,16 +42,31 @@ void *thread1handler()
 void *thread2handler()
 {
     //function 2 for thread 2.
-    
+    printf("Thread 2 in\n");
     //do some work here and call function()
-    
+    int i = 0;
+    for(i = 0; i < 100; i++) {
+        printf("2\n");
+    }
+    printf("Thread 2 out\n");
+
     pthread_exit(NULL);
 }
 
 void *thread3handler()
 {
     //function 3 for thread 3.
+    printf("Thread 3 in\n");
+    printf("Locking thread 3.\n");
+    pthread_mutex_lock(&mutex);
     //do some work here
+    int i = 0;
+    for(i = 0; i < 100; i++) {
+        printf("3\n");
+    }
+    printf("Releasing thread 3.\n");
+    pthread_mutex_unlock(&mutex);
+    printf("Thread 3 out\n");
     pthread_exit(NULL);
 }
 
@@ -68,15 +87,23 @@ int main(int argc, char *argv[])
     int maxpriority = sched_get_priority_max(policy);
     int minpriority = sched_get_priority_min(policy);
 
-    param.sched_priority = priority;
+    
 
     //set different priority for each thread
+    param.sched_priority = minpriority;
+    pthread_setschedparam(t1, policy, &param); // thread 1 lowest
+    param.sched_priority = priority;
+    pthread_setschedparam(t2, policy, &param);
+    param.sched_priority = maxpriority;
+    pthread_setschedparam(t3, policy, &param); // thread 3 high priority
     
-    pthread_setschedparam(t1, policy, &param);
-    //pthread_getschedparam(t1, &policy, &param);
-    
+    printf("Thread 1 beginning...\n");
     pthread_join(t1, NULL);
+    sleep(100);
+    printf("Thread 2 beginning...\n");
     pthread_join(t2, NULL);
+    sleep(100);
+    printf("Thread 3 beginning...\n");
     pthread_join(t3, NULL);
     
     return 0;
