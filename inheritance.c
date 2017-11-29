@@ -23,18 +23,18 @@ void function()
 void *thread1handler()
 {
     //function 1 for thread 1.
-    printf("Thread 1 in\n");
-    printf("Locking thread 1\n");
+    printf("Thread 1 created.\n");
     pthread_mutex_lock(&mutex);
+    printf("Locked thread 1\n");
     //do some work here
     int i = 0;
-    for(i = 0; i < 100; i++) {
+    for(i = 0; i < 5; i++) {
         sleep(150);
         printf("1\n");
     }
-    printf("Releasing thread 1\n");
     pthread_mutex_unlock(&mutex);
-    
+    printf("Released thread 1\n");
+
     printf("Thread 1 out\n");
     
     pthread_exit(NULL);
@@ -43,10 +43,10 @@ void *thread1handler()
 void *thread2handler()
 {
     //function 2 for thread 2.
-    printf("Thread 2 in\n");
+    printf("Thread 2 created.\n");
     //do some work here and call function()
     int i = 0;
-    for(i = 0; i < 100; i++) {
+    for(i = 0; i < 5; i++) {
         printf("2\n");
     }
     printf("Thread 2 out\n");
@@ -57,17 +57,17 @@ void *thread2handler()
 void *thread3handler()
 {
     //function 3 for thread 3.
-    printf("Thread 3 in\n");
-    printf("Locking thread 3.\n");
+    printf("Thread 3 created.\n");
     pthread_mutex_lock(&mutex);
+    printf("Locking thread 3.\n");
     //do some work here
     int i = 0;
-    for(i = 0; i < 100; i++) {
-        sleep(100);
+    for(i = 0; i < 5; i++) {
+        sleep(150);
         printf("3\n");
     }
-    printf("Releasing thread 3.\n");
     pthread_mutex_unlock(&mutex);
+    printf("Released thread 3.\n");
     printf("Thread 3 out\n");
     pthread_exit(NULL);
 }
