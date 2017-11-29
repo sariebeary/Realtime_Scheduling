@@ -23,16 +23,24 @@ void function()
 void *thread1handler()
 {
     //function 1 for thread 1.
+    printf("Thread 1 in\n");
+    printf("Thread 1 starts\n");
+    pthread_mutex_lock(&mutex);
     //do some work here
+    pthread_mutex_unlock(&mutex);
+    
+    printf("Thread 1 ends\n");
+    printf("Thread 1 out\n");
+    
     pthread_exit(NULL);
 }
 
 void *thread2handler()
 {
     //function 2 for thread 2.
-    pthread_mutex_lock(&mutex);
+    
     //do some work here and call function()
-    pthread_mutex_unlock(&mutex);
+    
     pthread_exit(NULL);
 }
 
