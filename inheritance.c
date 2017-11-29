@@ -29,7 +29,6 @@ void *thread1handler()
     //do some work here
     int i = 0;
     for(i = 0; i < 5; i++) {
-        sleep(150);
         printf("1\n");
     }
     pthread_mutex_unlock(&mutex);
@@ -63,7 +62,6 @@ void *thread3handler()
     //do some work here
     int i = 0;
     for(i = 0; i < 5; i++) {
-        sleep(150);
         printf("3\n");
     }
     pthread_mutex_unlock(&mutex);
@@ -94,20 +92,19 @@ int main(int argc, char *argv[])
     //set different priority for each thread
     param.sched_priority = minpriority;
     pthread_setschedparam(t1, policy, &param); // thread 1 lowest
-    param.sched_priority = priority;
+    param.sched_priority = (maxpriority + minpriority) / 2;
     pthread_setschedparam(t2, policy, &param);
     param.sched_priority = maxpriority;
     pthread_setschedparam(t3, policy, &param); // thread 3 high priority
     
-    printf("Thread 1 beginning...\n");
-    pthread_join(t1, NULL);
-    sleep(100);
-    printf("Thread 2 beginning...\n");
-    pthread_join(t2, NULL);
-    sleep(100);
-    printf("Thread 3 beginning...\n");
-    pthread_join(t3, NULL);
     
+    pthread_join(t1, NULL);
+    printf("Thread 1 ended\n");
+    pthread_join(t2, NULL);
+    printf("Thread 2 ended\n");
+    pthread_join(t3, NULL);
+    printf("Thread 3 ended\n");
+
     return 0;
 }
 
