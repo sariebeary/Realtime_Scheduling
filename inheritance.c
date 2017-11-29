@@ -1,5 +1,5 @@
 //#define _GNU_SOURCE
-#define __USE_UNIX98	/* Needed for PTHREAD_PRIO_INHERIT */
+//#define __USE_UNIX98	/* Needed for PTHREAD_PRIO_INHERIT */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +15,7 @@ static pthread_mutexattr_t mta; // mutex attribute variable
 void function()
 {
  //do some work here.
-    pthread_mutex_lock(&lock);
+    pthread_mutex_lock(&mutex);
 }
 
 void function1()
