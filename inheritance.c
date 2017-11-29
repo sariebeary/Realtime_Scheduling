@@ -29,6 +29,7 @@ void *thread1handler()
     //do some work here
     int i = 0;
     for(i = 0; i < 100; i++) {
+        sleep(150);
         printf("1\n");
     }
     printf("Releasing thread 1\n");
@@ -62,6 +63,7 @@ void *thread3handler()
     //do some work here
     int i = 0;
     for(i = 0; i < 100; i++) {
+        sleep(100);
         printf("3\n");
     }
     printf("Releasing thread 3.\n");
