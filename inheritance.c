@@ -16,30 +16,30 @@ int priority = 10;
 
 void function()
 {
- //do some work here.
+    //do some work here.
     
 }
 
 void *thread1handler()
 {
- //function 1 for thread 1.
- //do some work here
+    //function 1 for thread 1.
+    //do some work here
     pthread_exit(NULL);
 }
 
 void *thread2handler()
 {
-//function 2 for thread 2.
-//do some work here and call function()
+    //function 2 for thread 2.
     pthread_mutex_lock(&mutex);
+    //do some work here and call function()
     pthread_mutex_unlock(&mutex);
     pthread_exit(NULL);
 }
 
 void *thread3handler()
 {
-//function 3 for thread 3.
-//do some work here
+    //function 3 for thread 3.
+    //do some work here
     pthread_exit(NULL);
 }
 
@@ -57,11 +57,13 @@ int main(int argc, char *argv[])
     pthread_create(&t2, NULL, (void *) thread2handler, NULL);
     pthread_create(&t3, NULL, (void *) thread3handler, NULL);
     
-    param.sched_priority = priority;
-    
     int maxpriority = sched_get_priority_max(policy);
     int minpriority = sched_get_priority_min(policy);
+
+    param.sched_priority = priority;
+
     //set different priority for each thread
+    
     pthread_setschedparam(t1, policy, &param);
     //pthread_getschedparam(t1, &policy, &param);
     
