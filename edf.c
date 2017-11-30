@@ -11,9 +11,9 @@ int main()
  int numa=0,numb=0;                         //accumulated execution time
  int T;
  int deadlineA, deadlineB;
- printf("\t\t\t------------------------------------------------\n");
- printf("\t\tEarliest Deadline First algorithm\n");
- printf("\t\t\t------------------------------------------------\n");
+ printf("------------------------------------------------\n");
+ printf("\tEarliest Deadline First algorithm\n");
+ printf("------------------------------------------------\n");
  printf("please input period and execution for A process\n");
  scanf("%d%d",&cycA,&serveA);
  printf("please input period and execution for B process\n");
